@@ -11,7 +11,7 @@ from imblearn.over_sampling import SMOTE
 
 # --- DOSYA YOLLARI ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_PATH = os.path.join(BASE_DIR, 'data', 'raw', 'asthma_disease_data_fixed.csv')
+DATA_PATH = os.path.join(BASE_DIR,'asthma_disease_data_fixed.csv')
 MODEL_PATH = os.path.join(BASE_DIR, 'models', 'risk_tahmin_modeli.pkl')
 SCALER_PATH = os.path.join(BASE_DIR, 'models', 'scaler.pkl')
 
