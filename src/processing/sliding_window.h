@@ -1,4 +1,4 @@
-#pragme once
+#pragma once
 #include <Arduino.h>
 #include <vector>
 
@@ -11,7 +11,7 @@ class SlidingWindow{
       void push(float x);
 
       bool full() const {return _count==_cap;}
-      size_t size() const {return _count};
+      size_t size() const {return _count;}
       size_t capacity() const {return _cap;}
 
       float mean() const;
@@ -41,4 +41,4 @@ class SlidingWindow{
       void markMinMaxDirty();
       void recomputeMinMax() const;
 
-}
+};

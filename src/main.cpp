@@ -9,6 +9,7 @@
 
 #include "processing/fusion.h"
 #include "time_sync.h"
+#include "storage/logger.h"
 
 static uint32_t lastSample=0;
 static uint32_t lastDHT =0;
@@ -47,6 +48,11 @@ void setup(){
   Serial.print("# time="); Serial.println(timeSync_iso8601());
 
 
+  bool fsOK=logger_init(true);
+  Serial.print("# littlefs="); Serial.println(fsOK? "OK":"FAIL");
+
+
+
 }
 
 void loop(){
@@ -81,4 +87,23 @@ void loop(){
   FusionSample s = fuse(ts_ms, bme_last, dht_last, pms_last);
   Serial.println(toJsonLine(s));
 
+
+  String path=dailyLogPath();
+  logger_rotateIfTooBig(path.c_str(),1024*200,"/log_prev.jsonl");
+  logger_appendLine(path.c_str(),toJsonLine(s));
+
+
+
+
+  
 }
+static void ensureCsvHeader(const char* csvPath){
+    if (!LittleFS.exists(csvPath)){
+      File f=LittleFS.open(csvPath,"w");
+      if(f){
+        f.println("epoch_ms,pm1,pm25,pm10,t_bme,rh_bme,p_hpa,gas_ohm,t_dht,rh_dht");
+
+        f.close();
+      }
+    }
+  }
