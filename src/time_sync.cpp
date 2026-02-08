@@ -76,5 +76,17 @@ String timeSync_iso8601(){
              timeinfo.tm_min,
              timeinfo.tm_sec);
     return String(buf);
+
+
+
+
     
+}
+
+static String dailyLogPath(){
+    String iso=timeSync_iso8601();
+    if (iso=="null") return "/log_unknown.jsonl";
+    String day=iso.substring(0,10);
+    day.replace("-","");
+    return "/log_"+day+".jsonl";
 }
